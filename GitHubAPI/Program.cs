@@ -11,6 +11,7 @@ namespace GitHubAPI
     class Program
     {
         static readonly HttpClient _client = new HttpClient();
+        static string username = string.Empty;
 
         static void Main(string[] args)
         {
@@ -19,7 +20,7 @@ namespace GitHubAPI
                 + "their public repositories and make the data available for download as an Excel file.\n\n"
                 + "Enter a GitHub username: ");
 
-            string username = Console.ReadLine().ToLower();
+            username = Console.ReadLine().ToLower();
 
             var userRepos = GetGitHubRepoDataByUsername(username).Result;
 
@@ -55,7 +56,7 @@ namespace GitHubAPI
         static void Download(List<RepositoryModel> repos)
         {
             byte[] fileData;
-            var path = @"D:\development\mytest.xlsx";
+            var path = @"D:\development\" + username + "_RepoData.xlsx";
 
             using (var pkg = new ExcelPackage())
             {
